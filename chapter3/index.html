@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <link rel="shortcut icon" href="../img/favicon.ico" />
+    <title>Anaconda虚拟环境配置 - Perception Computing Lab</title>
+    <link rel="stylesheet" href="../css/theme.css" />
+    <link rel="stylesheet" href="../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/github.min.css" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "Anaconda\u865a\u62df\u73af\u5883\u914d\u7f6e";
+        var mkdocs_page_input_path = "chapter3.md";
+        var mkdocs_page_url = null;
+      </script>
+    
+    <script src="../js/jquery-3.6.0.min.js" defer></script>
+    <!--[if lt IE 9]>
+      <script src="../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js"></script>
+      <script>hljs.initHighlightingOnLoad();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href=".." class="icon icon-home"> Perception Computing Lab
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="..">组会制度</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../chapter2/">服务器远程连接</a>
+                </li>
+              </ul>
+              <ul class="current">
+                <li class="toctree-l1 current"><a class="reference internal current" href="./">Anaconda虚拟环境配置</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#31-anaconda">3.1 虚拟环境相关anaconda命令</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#32-pythonlinux">3.2 虚拟环境中python包安装/卸载方法(linux环境下)</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#321-tensorflow">3.2.1 Tensorflow</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#322-keras">3.2.2 keras</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#323-pytorch">3.2.3 pytorch</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#33-pip">3.3 更改使用pip源</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#331">3.3.1 清华源</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#332">3.3.2 哈工大源（推荐）</a>
+    </li>
+        </ul>
+    </li>
+    </ul>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../chapter4/">CPU和GPU使用注意事项</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../chapter5/">Tensorboard及screen</a>
+                </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="..">Perception Computing Lab</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href=".." class="icon icon-home" alt="Docs"></a> &raquo;</li>
+      <li>Anaconda虚拟环境配置</li>
+    <li class="wy-breadcrumbs-aside">
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="3-anaconda">第3章 Anaconda虚拟环境配置</h1>
+<p>&emsp;&emsp;服务器公用环境中安装了Anaconda2019.03(python3.7), 无特殊情况下，我们跑程序必须都在虚拟环境中进行。<br />
+&emsp;&emsp;可自行安装虚拟环境，然后在该虚拟环境中安装自己需要的python包，具体建立方法见anaconda常用命令。</p>
+<h2 id="31-anaconda">3.1 虚拟环境相关anaconda命令</h2>
+<p>&emsp;&emsp;进入虚拟环境： source/conda activate env_name<br />
+&emsp;&emsp;eg: 进入名为tensorflow的虚拟环境,当前面出现(tensorflow)说明虚拟环境激活成功。
+<img alt="Screenshot" src="../img/3.1.png" /></p>
+<p>&emsp;&emsp;退出虚拟环境： source deactivate env_name<br />
+&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;conda deactivate  </p>
+<p>&emsp;&emsp;查看当前可用虚拟环境： conda env list/conda info -e<br />
+&emsp;&emsp;查看当前虚拟环境中安装python包： conda list<br />
+&emsp;&emsp;新建虚拟环境： conda create -n env_name python=x.x(3.6,2.7等版本)<br />
+&emsp;&emsp;其中的env_name 为自定义虚拟环境的名称，无特定命令要求。注意：新建的虚拟环境目录存在于个人用户文件夹下，具体目录为：~/.conda/env  </p>
+<h2 id="32-pythonlinux">3.2 虚拟环境中python包安装/卸载方法(linux环境下)</h2>
+<p>&emsp;&emsp;Python包管理工具有很多，常用的有conda   和pip两个包管理工具，强烈推荐使用conda进行包管理，因为其安装简单，很多安装包打包一起下载，非常方便。    </p>
+<h3 id="321-tensorflow">3.2.1 Tensorflow</h3>
+<p>&emsp;&emsp;安装指定版本的tensorflow-gpu: conda install tensorflow-gpu==x.x.x    该操作会打包安装cuda、cudnn、tensorflow、tensorborad等安装包，针对利用pip安装操作复杂情况做了很好的优化，一步到位！<br />
+&emsp;&emsp;检测tensorflow是否使用GPU进行计算：进入python解释器（输入python即可），然后输入以下代码：<br />
+&emsp;&emsp;import tensorflow as tf <br />
+&emsp;&emsp;sess = tf.Session(config=tf.ConfigProto(log_device_placement=True))<br />
+&emsp;&emsp;若日志信息有GPU信息，则表示使用了！  </p>
+<h3 id="322-keras">3.2.2 keras</h3>
+<p>&emsp;&emsp;安装指定版本的keras-gpu(tensorflow后端)  ，因为keras以tensorflow或Theano为后端，此处以tensorflow后端为例。在安装好特定版本的tensorflow-gpu的基础之上，输入： conda install keras-gpu==x.x.x<br />
+&emsp;&emsp;测试keras是否安装成功与是否使用GPU计算，与tensorflow基本相同，此处不再赘述！  </p>
+<h3 id="323-pytorch">3.2.3 pytorch</h3>
+<p>&emsp;&emsp;安装指定版本的pytorch: 安装pytorch很简单，登陆pytorch官方网站(https://pytorch.org/) ,主页有针对不同平台、不同python版本、不同pytorch版本以及不同包管理工具的命令生成小工具，很方便，很简单！但首先还是需要安装一些基本的包，如cuda, cudnn，numpy等:<br />
+&emsp;&emsp;Conda 安装cuda: conda install cudatoolkit=x.x.x <br />
+&emsp;&emsp;Conda 安装cudnn conda install cudnn=x.x.x<br />
+&emsp;&emsp;Conda 安装 numpy conda install numpy=x.x.x <img alt="Screenshot" src="../img/3.2.3.1.png" /><br />
+&emsp;&emsp;检测是否成功安装pytorch，在虚拟环境中进入python解释器输入： <br />
+&emsp;&emsp;&emsp;&emsp;import torch<br />
+&emsp;&emsp;&emsp;&emsp;import torchvision<br />
+&emsp;&emsp;不报错证明安装成功！<br />
+&emsp;&emsp;检测pytorch是否可使用GPU：<br />
+&emsp;&emsp;print(torch.cuda.is_available())<br />
+&emsp;&emsp;返回True即为可用GPU进行计算！  </p>
+<p>&emsp;&emsp;安装其他需要的安装包也类似： conda install xxx==x.x.x  <br />
+&emsp;&emsp;<strong>注意：如果需要卸载相应安装包，由于安装深度学习框架相关包时是打包下载安装，因为卸载一个的同时，会将所有打包下载的相关依赖均卸载。其他一般的python包没有这个问题。<br />
+&emsp;&emsp;卸载包： Conda remove xxx</strong>   </p>
+<p>&emsp;&emsp;Conda 安装包下载源设置： <br />
+&emsp;&emsp;当前由于版权问题，绝大多数国内源，如清华源，中科大源均于2019.5.4后均停止服务，后期恢复日期未定！后期若开发，再补充设置国内源方法。<br />
+&emsp;&emsp;Pip 安装方法：此处不做说明，如果有兴趣可以自行查阅安装方法，其实都差不多。此处只给大家提供设置pip国内源的方法，加速包下载过程，避免出现安装包下载缓慢的情况（默认情况下下载源在境外！）    </p>
+<h2 id="33-pip">3.3 更改使用pip源</h2>
+<h3 id="331">3.3.1 清华源</h3>
+<p>&emsp;&emsp;Pip添加清华源（目前仍可用）： <br />
+&emsp;&emsp;临时使用：<br />
+&emsp;&emsp;pip install -i https://pypi.tuna.tsinghua.edu.cn/simple some-package<br />
+&emsp;&emsp;注意，simple 不能少, 是 https 而不是 http<br />
+&emsp;&emsp;设为默认(推荐)<br />
+&emsp;&emsp;升级 pip 到最新的版本 (&gt;=10.0.0) 后进行配置：<br />
+&emsp;&emsp;pip install pip -U<br />
+&emsp;&emsp;pip config set global.index-url https://pypi.tuna.tsinghua.edu.cn/simple<br />
+&emsp;&emsp;如果 pip 默认源的网络连接较差，临时使用本镜像站来升级 pip：<br />
+&emsp;&emsp;pip install -i https://pypi.tuna.tsinghua.edu.cn/simple pip -U<br />
+&emsp;&emsp;上述操作会在用户根目录下生成一个配置文件，该文件位置为：/.config/pip/pip.conf <br />
+&emsp;&emsp;利用vim查看该文件：<br />
+&emsp;&emsp;vim ~/.config/pip/pip.conf<br />
+&emsp;&emsp;现如下图所示说明配置成功！从此利用pip安装包速度起飞！！ <img alt="Screenshot" src="../img/3.2.3.2.png" />  </p>
+<h3 id="332">3.3.2 哈工大源（推荐）</h3>
+<p>&emsp;&emsp;在学校使用下载非常快。<br />
+&emsp;&emsp;pypi如果清华的源出现timeout 可以考虑哈工大的源。每日更新，很频繁。<br />
+&emsp;&emsp;【链接】哈尔滨工业大学开源镜像站 http://mirrors.hit.edu.cn/#/home<br />
+&emsp;&emsp;永久：pip config set global.index-url https://mirrors.hit.edu.cn/pypi/web/simple<br />
+&emsp;&emsp;临时：pip install some_package -i https://mirrors.hit.edu.cn/pypi/web/simple  </p>
+              
+            </div>
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href="../chapter2/" class="btn btn-neutral float-left" title="服务器远程连接"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../chapter4/" class="btn btn-neutral float-right" title="CPU和GPU使用注意事项">Next <span class="icon icon-circle-arrow-right"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+    
+      <span><a href="../chapter2/" style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+      <span><a href="../chapter4/" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
+</div>
+    <script>var base_url = '..';</script>
+    <script src="../js/theme_extra.js" defer></script>
+    <script src="../js/theme.js" defer></script>
+      <script src="../search/main.js" defer></script>
+    <script defer>
+        window.onload = function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        };
+    </script>
+
+</body>
+</html>

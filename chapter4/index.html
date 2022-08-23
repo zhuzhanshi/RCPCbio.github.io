@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <link rel="shortcut icon" href="../img/favicon.ico" />
+    <title>CPU和GPU使用注意事项 - Perception Computing Lab</title>
+    <link rel="stylesheet" href="../css/theme.css" />
+    <link rel="stylesheet" href="../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/github.min.css" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "CPU\u548cGPU\u4f7f\u7528\u6ce8\u610f\u4e8b\u9879";
+        var mkdocs_page_input_path = "chapter4.md";
+        var mkdocs_page_url = null;
+      </script>
+    
+    <script src="../js/jquery-3.6.0.min.js" defer></script>
+    <!--[if lt IE 9]>
+      <script src="../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js"></script>
+      <script>hljs.initHighlightingOnLoad();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href=".." class="icon icon-home"> Perception Computing Lab
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="..">组会制度</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../chapter2/">服务器远程连接</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../chapter3/">Anaconda虚拟环境配置</a>
+                </li>
+              </ul>
+              <ul class="current">
+                <li class="toctree-l1 current"><a class="reference internal current" href="./">CPU和GPU使用注意事项</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#41-cpu">4.1 CPU多线程问题：</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#42-gpu">4.2 GPU多卡设置问题：</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#43">4.3 重要</a>
+    </li>
+    </ul>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../chapter5/">Tensorboard及screen</a>
+                </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="..">Perception Computing Lab</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href=".." class="icon icon-home" alt="Docs"></a> &raquo;</li>
+      <li>CPU和GPU使用注意事项</li>
+    <li class="wy-breadcrumbs-aside">
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="4-cpugpu">第4章 CPU和GPU使用注意事项</h1>
+<h2 id="41-cpu">4.1 CPU多线程问题：</h2>
+<p>使用PyTorch、tensorflow、keras等提交任务时, System部分的CPU占比较高时，推荐在代码内部最开始的地方添加下列语句(其中num是在作业系统中申请的CPU线程数)，避免频繁切换线程造成系统CPU占用过高，影响自己和他人的运行速度。<br />
+  Pytorch:<br />
+  torch.set_num_threads(num) # Sets the number of OpenMP threads used for parallelizing CPU operations<br />
+  tensorflow/keras:<br />
+  cpu_config = tf.ConfigProto(intra_op_parallelism_threads = num, inter_op_parallelism_threads = num, device_count = {'CPU': num})<br />
+  sess = tf.Session(config=cpu_config)  </p>
+<h2 id="42-gpu">4.2 GPU多卡设置问题：</h2>
+<p>查看显卡信息命令： nvidia-smi<br />
+  在用tensorflow、pytorch、keras等训练深度学习模型的时候，假设我们在训练之前没有指定GPU来进行训练，则默认的是选用第0块GPU来训练我们的模型，而且其它几块GPU的也会显示被占用。有些时候，我们更希望可以通过自己指定一块或者几块GPU来训练我们的模型，而不是用这种默认的方法。  </p>
+<p>假设我们要用我们的第2块GPU来训练模型，此时可以通过下面的代码来指定(注意设备编号从0开始！)：<br />
+  • import os<br />
+  • os.environ['CUDA_VISIBLE_DEVICES']='1'<br />
+  同样，如果要指定2，3块GPU来训练，则上面的代码可以改成：<br />
+  os.environ['CUDA_VISIBLE_DEVICES']='1，2'  </p>
+<h2 id="43">4.3 重要</h2>
+<p>最后，但是也很重要的是，遇到问题，请联系管理员！</p>
+              
+            </div>
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href="../chapter3/" class="btn btn-neutral float-left" title="Anaconda虚拟环境配置"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../chapter5/" class="btn btn-neutral float-right" title="Tensorboard及screen">Next <span class="icon icon-circle-arrow-right"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+    
+      <span><a href="../chapter3/" style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+      <span><a href="../chapter5/" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
+</div>
+    <script>var base_url = '..';</script>
+    <script src="../js/theme_extra.js" defer></script>
+    <script src="../js/theme.js" defer></script>
+      <script src="../search/main.js" defer></script>
+    <script defer>
+        window.onload = function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        };
+    </script>
+
+</body>
+</html>
